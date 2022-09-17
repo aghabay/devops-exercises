@@ -8,38 +8,41 @@ A completely free application for testing your knowledge on Linux
 
 ## Linux Self Assessment
 
-* [Linux 101](#questions-linux-101)
-* [Linux I/O Redirection](#questions-linux-redirection)
-* [Linux Filesystem Hierarchy Standard](#questions-linux-fhs)
-* [Linux Permissions](#questions-linux-permissions)
-* [Linux Scenarios](#questions-linux-scenarios)
-* [Linux Systemd](#questions-linux-systemd)
-* [Linux Troubleshooting and Debugging](#questions-linux-troubleshooting)
-* [Linux kernel](#questions-linux-kernel)
-* [Linux SSH](#questions-linux-ssh)
-* [Linux Globbing and Wildcards](#questions-linux-wildcards)
-* [Linux Boot Process](#questions-linux-boot)
-* [Linux Disk and Filesystem](#questions-linux-disk-fs)
-* [Linux Performance Analysis](#questions-linux-performance-analysis)
-* [Linux Processes](#questions-linux-processes)
-* [Linux Security](#questions-linux-security)
-* [Linux Networking](#questions-linux-networking)
-* [Linux DNS](#questions-linux-dns)
-* [Linux Packaging](#questions-linux-packaging)
-* [Linux DNF](#questions-linux-dnf)
-* [Linux Applications and Services](#questions-linux-apps-and-services)
-* [Linux Users and Groups](#questions-linux-users-and-groups)
-* [Linux Hardware](#questions-linux-hardware)
-* [Linux Namepsaces](#questions-linux-namespaces)
-* [Linux Virtualization](#questions-linux-virtualization)
-* [Linux AWK](#questions-linux-awk)
-* [Linux System Calls](#questions-linux-system-calls)
-* [Linux Filesystem and Files](#questions-linux-fs-files)
-* [Linux Advanced Networking](#questions-linux-advanced-networking)
-* [Linux Memory](#questions-linux-memory)
-* [Linux Distributions](#questions-linux-distributions)
-* [Linux Sed](#questions-linux-sed)
-* [Linux Misc](#questions-linux-misc)
+- [Linux](#linux)
+  - [Linux Master Application](#linux-master-application)
+  - [Linux Self Assessment](#linux-self-assessment)
+    - [Linux 101](#linux-101)
+    - [I/O Redirection](#io-redirection)
+    - [Filesystem Hierarchy Standard](#filesystem-hierarchy-standard)
+    - [Permissions](#permissions)
+    - [Scenarios](#scenarios)
+    - [Systemd](#systemd)
+    - [Troubleshooting & Debugging](#troubleshooting--debugging)
+    - [Kernel](#kernel)
+    - [SSH](#ssh)
+    - [Globbing & Wildcards](#globbing--wildcards)
+    - [Boot Process](#boot-process)
+    - [Disk and Filesystem](#disk-and-filesystem)
+    - [Performance Analysis](#performance-analysis)
+    - [Processes](#processes)
+    - [Security](#security)
+    - [Networking](#networking)
+    - [DNS](#dns)
+    - [Packaging](#packaging)
+    - [DNF](#dnf)
+    - [Applications and Services](#applications-and-services)
+    - [Users and Groups](#users-and-groups)
+    - [Hardware](#hardware)
+    - [Namespaces](#namespaces)
+    - [Virtualization](#virtualization)
+    - [AWK](#awk)
+    - [System Calls](#system-calls)
+    - [Filesystem & Files](#filesystem--files)
+    - [Advanced Networking](#advanced-networking)
+    - [Memory](#memory)
+    - [Distributions](#distributions)
+    - [Sed](#sed)
+    - [Misc](#misc)
 
 <a name="questions-linux-101"></a>
 ### Linux 101
@@ -1400,6 +1403,39 @@ What is the meaning of the number 3515?
 This is the TTL. When you lookup for an address using a domain/host name, your OS is performing DNS resolution by contacting DNS name servers to get the IP address of the host/domain you are looking for.<br>
 When you get a reply, this reply in cached in your OS for a certain period of time. This is period of time is also known as TTL and this is the meaning of 3515 number - it will be cached for 3515 seconds before removed from the cache and during that period of time, you'll get the value from the cache instead of asking DNS name servers for the address again.
 </b></details>
+
+<details>
+
+<summary> How can we modify the network connection via `nmcli` command, to use `8.8.8.8` as a DNS server? </summary><br><b>
+
+1. Find the connection name: 
+    ```
+    # nmcli con show
+    NAME         UUID                                  TYPE      DEVICE
+    System ens5  8126c120-a964-e959-ff98-ac4973344505  ethernet  ens5
+    System eth0  5fb06bd0-0bb0-7ffb-45f1-d6edd65f3e03  ethernet  --
+    ```
+    Here the connection name is "System ens5". Let's say we want to modify settings for this connection.
+
+2. Modify the connection to use 8.8.8.8 as DNS server:
+    ```
+    # nmcli con mod "System ens5" ipv4.dns "8.8.8.8"
+    ```
+
+3. We need to reactivate the connection for the change to take effect:
+    ```
+    nmcli con up "System ens5"
+    ```
+
+4. Verify our settings once more:
+    ```
+    cat /etc/resolv.conf
+    nmcli -f ipv4.dns con show "System ens5"
+    ```
+</b>
+
+</details>
+
 
 <a name="questions-linux-packaging"></a>
 ### Packaging
